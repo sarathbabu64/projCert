@@ -1,4 +1,3 @@
-
 ---
 - hosts: all
   become: yes
@@ -17,28 +16,3 @@
         name: ['apt-transport-https','ca-certificates','curl','gnupg2','software-properties-common','docker-ce']
         state: present
         update_cache: yes
-
----
-- hosts: all
-  become: yes
-  become_user: root
-  tasks:
-    - name: Add Docker GPG key
-      apt_key: 
-        url: https://download.docker.com/linux/ubuntu/gpg
-
-    - name: Add Docker APT repository
-      apt_repository:
-          repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
-
-    - name: Install Docker packages
-      apt:
-        name: "{{ item }}" 
-        state: present
-        update_cache: yes
-      with_items:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - software-properties-common
-        - docker-ce
